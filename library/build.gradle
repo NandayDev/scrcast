@@ -1,35 +1,12 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
 
-apply plugin: "org.jetbrains.dokka"
-apply plugin: "com.vanniktech.maven.publish"
-
-afterEvaluate {
-    dokka {
-        outputDirectory = "$rootDir/docs/api"
-        outputFormat = "gfm"
-        configuration {
-            includeNonPublic = false
-            reportUndocumented = true
-            jdkVersion = 8
-            skipDeprecated = true
-            skipEmptyPackages = true
-
-            // suppress internal operations from logging to API docs
-            perPackageOption {
-                prefix = "dev.bmcreations.scrcast.internal"
-                suppress = true
-            }
-        }
-    }
-}
-
 dependencies {
-    implementation deps.dexter
-    implementation deps.jetpack.activity
-    implementation deps.jetpack.appcompat
-    implementation deps.jetpack.fragment
-    implementation deps.jetpack.localbroadcast
+    implementation "com.karumi:dexter:6.2.2"
+    implementation "androidx.activity:activity-ktx:1.3.0-alpha07"
+    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation "androidx.fragment:fragment-ktx:1.3.3"
+    implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
 
-    implementation deps.kotlin.coroutinesCore
-    implementation deps.kotlin.coroutinesAndroid
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
 }
