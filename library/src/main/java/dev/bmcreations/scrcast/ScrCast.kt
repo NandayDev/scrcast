@@ -327,9 +327,9 @@ class ScrCast private constructor(private val activity: ComponentActivity) {
         MediaScannerConnection.scanFile(activity, arrayOf(outputFile.toString()), null) { path, uri ->
             Log.i("scrcast", "scanned: $path")
             Log.i("scrcast", "-> uri=$uri")
-            if (uri != null) {
-                onRecordingOutput?.invoke(File(path))
-            }
+            //if (uri != null) {
+            onRecordingOutput?.invoke(File(path))
+            //}
             _outputFile = null
         }
     }
