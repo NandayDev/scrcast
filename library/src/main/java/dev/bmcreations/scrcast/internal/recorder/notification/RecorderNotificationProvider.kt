@@ -20,7 +20,7 @@ import dev.bmcreations.scrcast.recorder.notification.NotificationProvider
 class RecorderNotificationProvider(
     private val context: Context,
     private val config: NotificationConfig
-): NotificationProvider(context) {
+) : NotificationProvider(context) {
 
     init {
         createNotificationChannel()
@@ -90,6 +90,19 @@ class RecorderNotificationProvider(
             if (config.showStop) {
                 addStop()
             }
+            // Makes the notification reopen the calling app when tapped //
+            val notificationIntent = Intent(context, context.javaClass)
+
+            notificationIntent.flags =
+                (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
+            val intent = PendingIntent.getActivity(
+                context,
+                0,
+                notificationIntent,
+                0
+            )
+            setContentIntent(intent)
         }
 
         return builder.build()
@@ -153,7 +166,7 @@ class RecorderNotificationProvider(
     }
 
     private fun Notification.Builder.addStop() {
-        with (Action.Stop) {
+        with(Action.Stop) {
             val stopIntent = Intent(
                 context,
                 RecordingNotificationReceiver::class.java
