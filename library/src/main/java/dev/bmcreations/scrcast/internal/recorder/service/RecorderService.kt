@@ -118,7 +118,8 @@ class RecorderService : Service() {
             setOutputFormat(options.storage.outputFormat)
             setOutputFile(outputFile)
             with(options.video) {
-                setVideoSize(width, height)
+                // TODO rivedere
+                setVideoSize(1080, 1920)
                 setVideoEncoder(videoEncoder)
                 setVideoEncodingBitRate(bitrate)
                 setVideoFrameRate(frameRate)
