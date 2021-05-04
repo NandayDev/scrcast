@@ -133,7 +133,7 @@ class ScrCast private constructor(private val activity: ComponentActivity) {
         override fun onReceive(p0: Context?, p1: Intent?) {
             p1?.action?.let { action ->
                 when (action) {
-                    STATE_RECORDING -> state = Recording
+                    STATE_RECORDING -> state = Recording.apply { didUserAbortRecording = false }
                     STATE_IDLE -> state = Idle(p1.extras?.get(EXTRA_ERROR) as? Throwable)
                     STATE_DELAY -> {
                         state = Delay(p1.extras?.getInt(EXTRA_DELAY_REMAINING) ?: 0)
@@ -179,6 +179,8 @@ class ScrCast private constructor(private val activity: ComponentActivity) {
             if (output != null) {
                 startService(result, output)
             }
+        } else {
+            state = Idle().also { it.didUserAbortRecording = true }
         }
     }
 
