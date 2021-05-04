@@ -49,4 +49,12 @@ sealed class RecordingState {
      * Convenience state query for when the state is [Delay]
      */
     val isInStartDelay: Boolean get() = this is Delay
+
+    private var _didUserAbortRecording = false
+    /**
+     * Whether the user aborted the recording before starting
+     */
+    var didUserAbortRecording : Boolean
+        get() = if (isRecording) false else _didUserAbortRecording
+        set(value) { _didUserAbortRecording = value }
 }
